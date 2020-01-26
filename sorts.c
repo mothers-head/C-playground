@@ -7,7 +7,11 @@
 
 int getList(int num_elems, char** argv, int* list);
 
-int main(int argc, char** argv) {
+void bubble(int num_elems, int* list);
+void merge(int num_elems, int* list);
+void print_list(int num_elems, int* list); 
+
+int main(int argc, char* argv[]) {
 
 	if(argc <= NUM_NON_LIST_ELEMS){	
 		fprintf(stderr, "error - no elements found\n");
@@ -15,9 +19,7 @@ int main(int argc, char** argv) {
 	}
 	
 	int num_elems = argc - NUM_NON_LIST_ELEMS;
-
 	int* list = malloc(sizeof(int) * num_elems);
-	
 	int err = getList(num_elems, argv, list);
 	
 	if(err != 0) {
@@ -27,10 +29,15 @@ int main(int argc, char** argv) {
 
 	printf("%i element(s) succsfully read\n", num_elems);
 
+	print_list(num_elems, list);
+	
+	bubble(num_elems, list);
+	//merge(num_elems, list);	
+	print_list(num_elems, list);
 }
 
 
-int getList(int num_elems, char** argv, int* list) {
+int getList(int num_elems, char* argv[], int* list) {
 	int err = 0;
 	for(int i = 0; i < num_elems; i++) {
 		err = sscanf(argv[i + NUM_NON_LIST_ELEMS], "%i", &list[i]);
@@ -41,5 +48,31 @@ int getList(int num_elems, char** argv, int* list) {
 	}
 	return 0;
 }
+
+void bubble(int num_elems, int* list) {
+
+	for(int i = 0; i < num_elems; i++){
+		for(int j = 0; j < num_elems; j++){
+			if(list[i] < list[j]) {
+				int tmp = list[i];
+				list[i] = list[j];
+				list[j] = tmp;	
+			}
+		}
+	}
+}
+
+
+void print_list(int num_elems, int* list){
+
+	for(int i = 0; i < num_elems; i++) {
+		printf("%i ", list[i]);
+	}
+	printf("\n");
+
+}
+
+
+
 
 
